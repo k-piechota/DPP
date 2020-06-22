@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 import game.Board
-import xmlrunner
+import testlink
 
 
 class TestBoard(unittest.TestCase):
@@ -19,6 +19,16 @@ class TestBoard(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    runner = xmlrunner.XMLTestRunner(output='test-reports')
-    unittest.main(testRunner=runner)
-    unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBoard)
+    out = unittest.TextTestRunner(verbosity=2).run(suite)
+    print(out)
+    if out.errors or out.failures:
+        result = "f"
+    else:
+        result = "p"
+
+    url = 'http://127.0.0.1/testlink/lib/api/xmlrpc/v1/xmlrpc.php'
+    key = '5ac847a7aec8bbf12e62842a6aa8cbb6'
+
+    tls = testlink.TestlinkAPIClient(url, key)
+    tls.reportTCResult(4, 8, 'Sample build', result, str(out))

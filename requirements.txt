@@ -1,4 +1,3 @@
-unittest-xml-reporting
 TestLink-API-Python-client
 PyQt5>=5.14.2
 Pillow>=7.1.1
