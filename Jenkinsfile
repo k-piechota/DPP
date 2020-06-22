@@ -9,6 +9,7 @@ pipeline {
 sh """
 export PATH=${VIRTUAL_ENV}/bin:${PATH}
 pwd
+pip install -r requirements.txt
 """
       }
     }
@@ -17,8 +18,13 @@ pwd
 sh """
 export PATH=${VIRTUAL_ENV}/bin:${PATH}
 python --version
-python -m game.test_Board.py
+python test.py
 """
+      }
+      post {
+        always {
+          junit '**/test-reports/*.xml'
+        }
       }
     }
   }
